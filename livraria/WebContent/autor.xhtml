@@ -22,11 +22,41 @@
 						<f:ajax event="blur" render="messageNome" />
 					</h:inputText>
 					<h:message for="nome" id="messageNome" />
-					<h:commandButton value="Gravar" action="#{autorBean.gravar}" />
+					<h:commandButton value="Gravar" action="#{autorBean.gravar}">
+						<f:ajax execute="@form"
+							render="@form :formTabelaAutores:tabelaAutores"></f:ajax>
+					</h:commandButton>
 				</h:panelGrid>
 			</fieldset>
 		</h:form>
+
+
+		<h:form id="formTabelaAutores">
+			<h:dataTable value="#{livroBean.autores}" var="autor"
+				id="tabelaAutores">
+				<h:column>
+					<f:facet name="header">Título</f:facet>
+					<h:outputText value="#{autor.nome}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Alterar</f:facet>
+					<h:commandLink value="Edite" action="#{autorBean.carregar(autor)}"/>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Remover</f:facet>
+					<h:commandLink value="Remove" action="#{autorBean.remover(autor)}" />
+				</h:column>
+
+			</h:dataTable>
+			<h:commandLink value="Cadastrar novo livro"
+				action="livro?faces-redirect=true" immediate="true" />
+		</h:form>
+
 	</ui:define>
+
+
 	<ui:define name="texto">
 		Cadastro de Autores
 	</ui:define>
