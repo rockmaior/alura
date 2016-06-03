@@ -35,7 +35,7 @@ public class LivroBean implements Serializable {
 	public Livro getLivro() {
 		return livro;
 	}
-	
+
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
@@ -61,7 +61,6 @@ public class LivroBean implements Serializable {
 	public void removerAutorDoLivro(Autor autor) {
 		this.livro.removeAutor(autor);
 	}
-
 
 	public void gravar() {
 		System.out.println("Gravando livro " + this.livro.getTitulo());
@@ -91,12 +90,24 @@ public class LivroBean implements Serializable {
 		this.livro = livro;
 	}
 
-	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
+	public String formAutor() {
+		System.out.println("Chamanda do formulário do Autor.");
+		return "autor?faces-redirect=true";
+	}
 
+	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
 		String valor = value.toString();
 		if (!valor.startsWith("1")) {
 			throw new ValidatorException(new FacesMessage("ISBN deveria começar com 1"));
 		}
 
+	}
+
+	public void carregaPelaId() {
+		Integer id = this.livro.getId();
+		this.livro = new DAO<Livro>(Livro.class).buscaPorId(id);
+		if (this.livro == null) {
+			this.livro = new Livro();
+		}
 	}
 }
