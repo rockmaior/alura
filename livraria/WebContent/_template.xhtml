@@ -6,13 +6,16 @@
 <h:head />
 
 <h:body>
-
 	<div id="cabecalho">
 		<h:graphicImage library="img" name="logo.png" />
+		<h:form rendered="#{usuarioLogado != null}">
+			<h:commandLink value="Logout" action="#{loginBean.deslogar}" />
+		</h:form>
 		<h1>
 			<ui:insert name="titulo">
 			</ui:insert>
 		</h1>
+		<h:outputText value="#{sessionScope['usuarioLogado'].email}" />
 	</div>
 
 
@@ -21,7 +24,7 @@
 		</ui:insert>
 
 	</div>
-	
+
 	<div id="rodape">
 		copyright 2012
 		<ui:insert name="texto"></ui:insert>
