@@ -5,7 +5,6 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
-import br.com.caelum.livraria.util.ForwardView;
 
 @ManagedBean
 @ViewScoped
@@ -18,12 +17,12 @@ public class AutorBean {
 	}
 
 	public String gravar() {
-		System.out.println("Gravando autor " + this.autor.getNome());
-
-		if (this.autor.getId() == null) {
+		
+		if (this.autor.getId() != null) {
 			System.out.println("Atualizando autor " + this.autor.getNome());
 			new DAO<Autor>(Autor.class).atualiza(this.autor);
 		} else {
+			System.out.println("Gravando autor " + this.autor.getNome());
 			new DAO<Autor>(Autor.class).adiciona(this.autor);
 		}
 

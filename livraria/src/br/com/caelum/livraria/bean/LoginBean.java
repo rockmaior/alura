@@ -1,5 +1,6 @@
 package br.com.caelum.livraria.bean;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -28,10 +29,11 @@ public class LoginBean {
 
 			return "livro?faces-redirect=true";
 		}
-
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		context.addMessage(null, new FacesMessage("Usuário não localizado"));
 		// tbm pode devolver o nome da página
-		// return "login";
-		return null;
+		return "login?faces-redirect=true";
+		// return null;
 	}
 
 	public String deslogar() {
