@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<venda moeda="real">
+<venda moeda="real" xsd:noNamespaceSchemaLocation="valida-venda.xsd"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance">
 	<formaDePagamento>Débito</formaDePagamento>
 	<produtos>
 		<produto>
 			<nome>Livro de XML</nome>
 			<preco>29.90</preco>
 		</produto>
-		
+
 		<produto>
 			<nome>Livro de Orientação a Objetos em Java</nome>
 			<preco>29.90</preco>
