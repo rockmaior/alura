@@ -5,13 +5,11 @@ public class Produto {
 	private double preco;
 
 	public Produto(String nome, double preco) {
-		super();
 		this.nome = nome;
 		this.preco = preco;
 	}
 
 	public Produto() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getNome() {
@@ -25,7 +23,7 @@ public class Produto {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Nome: " + nome + "\nPreço" + preco + "\n";
+		return "Nome: " + getNome() + "\nPreco: " + getPreco() + "\n";
 	}
 
 	public void setNome(String nome) {
