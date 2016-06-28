@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Venda {
 	private String formaDePagamento;
+	
 	@XmlElementWrapper(name = "produtos")
 	@XmlElement(name = "produto")
 	private List<Produto> produtos = new ArrayList<>();
