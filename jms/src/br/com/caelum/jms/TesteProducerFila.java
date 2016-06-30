@@ -9,11 +9,12 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
+import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
-public class TesteConsumidor {
+public class TesteProducerFila {
 	public static void main(String[] args) throws Exception {
 
 		InitialContext context = new InitialContext();
@@ -26,22 +27,13 @@ public class TesteConsumidor {
 
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		Destination fila = (Destination) context.lookup("financeiro");
-		MessageConsumer consumer = session.createConsumer(fila);
+		MessageProducer producer = session.createProducer(fila);
 
-		consumer.setMessageListener(new MessageListener() {
-
-			@Override
-			public void onMessage(Message message) {
-				TextMessage textMessage = (TextMessage) message;
-				try {
-					System.out.println(textMessage.getText());
-				} catch (JMSException e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-
+		for (int i = 0; i < 1000; i++) {
+			Message message = session.createTextMessage("<pedido><id>" + i + "</id></pedido>");
+			producer.send(message);
+		}
+		
 		new Scanner(System.in).nextLine();
 
 		session.close();
