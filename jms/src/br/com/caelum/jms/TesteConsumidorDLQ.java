@@ -14,13 +14,13 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
-public class TesteConsumidorFila {
+public class TesteConsumidorDLQ {
 	public static void main(String[] args) throws Exception {
-//		Properties properties = new Properties();
-//		properties.setProperty("java.naming.factory.initial", "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-//		properties.setProperty("java.naming.provider.url", "tcp://localhost:61616");
-//		properties.setProperty("queue.financeiro", "fila.financeiro");
-//		
+		Properties properties = new Properties();
+		properties.setProperty("java.naming.factory.initial", "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+		properties.setProperty("java.naming.provider.url", "tcp://localhost:61616");
+		properties.setProperty("queue.financeiro", "fila.financeiro");
+
 		InitialContext context = new InitialContext();
 
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
@@ -29,21 +29,15 @@ public class TesteConsumidorFila {
 
 		// Cria o consumidor
 
-		Session session = connection.createSession(true, Session.SESSION_TRANSACTED);
-		Destination fila = (Destination) context.lookup("financeiro");
+		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		Destination fila = (Destination) context.lookup("DLQ");
 		MessageConsumer consumer = session.createConsumer(fila);
 
 		consumer.setMessageListener(new MessageListener() {
 
 			@Override
 			public void onMessage(Message message) {
-				TextMessage textMessage = (TextMessage) message;
-				try {
-					session.commit();
-					System.out.println(textMessage.getText());
-				} catch (JMSException e) {
-					e.printStackTrace();
-				}
+				System.out.println(message);
 
 			}
 		});
